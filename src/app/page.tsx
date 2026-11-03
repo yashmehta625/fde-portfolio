@@ -1,69 +1,63 @@
-import Image from "next/image";
+import Link from "next/link";
+import { demos } from "@/lib/demos";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div className="mx-auto max-w-5xl px-6 py-16">
+      <section className="mb-16">
+        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+          Forward Deployed Engineering, made interactive
+        </h1>
+        <p className="text-neutral-400 max-w-2xl leading-relaxed">
+          A Forward Deployed Engineer&apos;s job isn&apos;t abstract —
+          it&apos;s parsing a customer&apos;s messy export, integrating a
+          flaky third-party API, and keeping a pipeline alive when traffic
+          spikes. Below are four of those problems, solved with real
+          algorithms running entirely in your browser. Change the input,
+          move the sliders, and see the actual behavior — not a mockup.
+        </p>
+      </section>
+
+      <section className="grid gap-5 sm:grid-cols-2">
+        {demos.map((demo) => (
+          <Link
+            key={demo.slug}
+            href={`/demos/${demo.slug}`}
+            className="group rounded-xl border border-neutral-800 bg-neutral-900/50 p-6 hover:border-neutral-600 hover:bg-neutral-900 transition-colors"
           >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
+            <h2 className="text-lg font-semibold mb-1 group-hover:text-white">
+              {demo.title}
+            </h2>
+            <p className="text-sm text-neutral-400 mb-4">{demo.tagline}</p>
+            <div className="flex gap-2 flex-wrap">
+              {demo.skillTags.map((tag) => (
+                <span
+                  key={tag}
+                  className="text-xs rounded-full border border-neutral-700 px-2 py-0.5 text-neutral-400"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </Link>
+        ))}
+      </section>
+
+      <section className="mt-16 text-sm text-neutral-500">
+        <p>
+          Full source for every demo, including the algorithms themselves, is
+          public on{" "}
           <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            href="https://github.com/yashmehta625/fde-portfolio"
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noreferrer"
+            className="underline hover:text-neutral-300"
           >
-            Documentation
+            GitHub
           </a>
-        </div>
-      </main>
+          .
+        </p>
+      </section>
     </div>
   );
 }

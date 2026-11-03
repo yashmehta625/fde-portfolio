@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FDE Portfolio
 
-## Getting Started
+Interactive demos of the problems a Forward Deployed Engineer actually
+solves in the field — not slides, working code you can poke at. Every demo
+runs a real algorithm client-side, in your browser, against whatever input
+you give it.
 
-First, run the development server:
+**Live site:** _(add your deployed URL here)_
+
+## Demos
+
+| Demo | Problem it solves | Core logic |
+| --- | --- | --- |
+| [Schema Inference Playground](src/app/demos/schema-inference) | A new customer hands you data with an unknown/inconsistent shape. Infer a unified schema (types, nullability, optionality) across heterogeneous JSON records and generate a `CREATE TABLE`. | [`src/lib/schemaInference.ts`](src/lib/schemaInference.ts) |
+| [Fuzzy Entity Resolution](src/app/demos/entity-resolution) | CRM exports are full of near-duplicate names ("Acme Corp." vs "ACME Corporation"). Cluster likely duplicates with a tunable similarity threshold (edit distance + token overlap). | [`src/lib/entityResolution.ts`](src/lib/entityResolution.ts) |
+| [Backpressure & Rate-Limit Simulator](src/app/demos/backpressure-simulator) | A customer's ingestion pipeline is fed faster than it can drain. Discrete-tick simulation of a bounded queue, a rate-limited consumer, and exponential backoff with jitter on failure. | [`src/lib/backpressureSim.ts`](src/lib/backpressureSim.ts) |
+| [Heterogeneous Data Reconciliation](src/app/demos/data-reconciliation) | Two source systems, two schemas, inconsistent casing/date formats. Match records by a configurable key, merge fields, and flag conflicts and unreconcilable rows instead of silently guessing. | [`src/lib/dataReconciliation.ts`](src/lib/dataReconciliation.ts) |
+
+Each `src/lib/*.ts` file is pure TypeScript with no framework dependency —
+the algorithm is fully decoupled from the UI and readable on its own.
+
+## Stack
+
+- [Next.js](https://nextjs.org) (App Router) + TypeScript
+- Tailwind CSS v4
+- No backend — every demo computes entirely client-side
+
+## Running locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+src/
+  lib/            # pure algorithm implementations (the actual "solutions")
+  components/      # shared UI (demo shell, charts, sliders)
+  app/
+    page.tsx        # landing page listing all demos
+    demos/<slug>/    # one route + one client component per demo
+```
